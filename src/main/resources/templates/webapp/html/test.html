@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../bootstrap/css/emoji.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap/css/chat.css">
+    <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+</head>
+<body>
+<span class="emoji emoji2601"></span>
+<p>DDDDDDDDDDDDDDDDDD</p>
+<button class="sendButton" onClick ="utf16toEntities('😅🤣😄😂')"> 点击 </button>
+<span id='name'>我和你心连心 </span>
+<button class="sendButton" onClick ="utf16toEntities('😅🤣😄😂')"> 还原 </button>
+</body>
+
+<script>
+    function utf16toEntities(str) {
+    var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
+    str = str.replace(patt, function(char){
+        var H, L, code;
+        if (char.length===2) {
+            H = char.charCodeAt(0); // 取出高位
+            L = char.charCodeAt(1); // 取出低位
+            code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法
+            return "&#" + code + ";";
+        } else {
+            return char;
+        }
+    });
+    console.log(str);
+    return str;
+}
+
+function uncodeUtf16(str){
+    var reg = /\&#.*?;/g;
+    var result = str.replace(reg,function(char){
+        var H,L,code;
+        if(char.length == 9 ){
+            code = parseInt(char.match(/[0-9]+/g));
+            H = Math.floor((code-0x10000) / 0x400)+0xD800;
+            L = (code - 0x10000) % 0x400 + 0xDC00;
+            return unescape("%u"+H.toString(16)+"%u"+L.toString(16));
+        }else{
+            return char;
+        }
+    });
+        console.log(result);
+    return result;
+}
+
+function randomEmoji(){
+let str = ['&#128517;','&#129315;','&#128516;','&#128514;']
+let i = Math.round(Math.random()*3);
+console.log("rrrrrrrrr"  + str[i]);
+return str[i];
+}
+
+var obj = document.getElementById("name");
+alert(obj.innerText +randomEmoji());
+</script>
+//document.getElementById('3').innerHTML = uncodeUtf16("&#128517;&#129315;&#128516;&#128514;");
+
+</html>

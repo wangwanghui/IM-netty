@@ -1,0 +1,52 @@
+server:
+  port: 9021
+jasypt:
+  encryptor:
+    bootstrap: false
+spring:
+  application:
+    name: im-netty-service
+  profiles:
+    active: dev
+  cloud:
+#    inetutils:
+#      preferred-networks: 192.168.7.134  ##如果服务实例所在的环境存在多个IP，使用该配置可指定IP
+#    service-registry:
+#      auto-registration:
+#        enabled: true
+    nacos:
+      discovery:
+        ip: 192.168.1.90
+#        enabled: false
+        server-addr: 114.132.77.125:8848 # 注册中心
+        group: IM_GROUP
+      config:
+#        enabled: false
+        server-addr: 114.132.77.125:8848 # 配置中心
+        file-extension: yml # 与nacos的配置文件格式相同
+        group: IM_GROUP
+
+
+## zookeeper 方式做注册中心
+#spring:
+#  application:
+#    name: chat-server
+#  cloud:
+#    zookeeper:
+##      config:
+##        enabled: true
+##        root: /server/config
+##        profileSeparator: "." #这是与环境连接的分隔符，如现在配置的是dev环境，那么加载的配置文件名称就是/discovery/config/product,dev  /discovery/config/product /discovery/application,dev  /discovery/application 优先级是环境，其次是spring.application.name然后再是 defaultContext，defaultContext是用来做默认配置的，用于比如全局的通用信息等等
+##        defaultContext: application #这是默认加载的命名空间
+#      discovery:
+#        root: /server
+#        # register: false
+#      connect-string: 127.0.0.1:2181
+#server:
+#  port: 9011
+#management:
+#  endpoints:
+#    web:
+#      #base-path: "/actuator"
+#      exposure:
+#        include: "*"
